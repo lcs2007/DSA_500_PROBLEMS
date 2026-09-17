@@ -1,4 +1,4 @@
-// Given an integer array, check if it contains a subarray having zero-sum.
+// Given an integer array, check if it contains a subarray having zero-sum and print all of them
 
 #include <stdio.h>
 
