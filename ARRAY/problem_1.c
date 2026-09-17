@@ -2,17 +2,43 @@
 
 #include <stdio.h>
 
-int findPairWithSum(int arr[], int size, int target) {
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = i + 1; j < size; j++) {
-            if (arr[i] + arr[j] == target) {
-                printf("Pair found: (%d, %d)\n", arr[i], arr[j]);
-                return 1; 
+int sortArray(int* arr, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
         }
     }
-    printf("Pair not found.\n");
-    return 0; 
+    return 0;
+}
+
+int findPairWithSum(int* arr, int n, int target) {
+    sortArray(arr, n);
+    int left = 0;
+    int right = n - 1;
+    int found = 0;
+
+    while (left < right) {
+        int currentSum = arr[left] + arr[right];
+        if (currentSum == target) {
+            printf("Pair found: (%d, %d)\n", arr[left], arr[right]);
+            left++;
+            right--;
+            found = 1;
+        } else if (currentSum < target) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+
+    if (!found) {
+        printf("Pair not found.\n");
+    }
+    return 0;
 }
 
 int main() {
@@ -27,9 +53,11 @@ int main() {
         scanf("%d", &arr[i]);
     }
 
-    printf("Enter the sum to find: ");
     int target;
+    printf("Enter the target sum: ");
     scanf("%d", &target);
+
+    sortArray(arr, n);
 
     findPairWithSum(arr, n, target);
 
